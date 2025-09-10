@@ -1,0 +1,102 @@
+@startuml Pacman
+top to bottom direction
+skinparam ranksep 500
+
+class Game
+class GameLoop
+class GameConfig
+class GameState
+class Level
+class Timer
+class SaveLoadManager
+
+class Maze
+class Cell
+class Pellet
+class PowerPellet
+class Fruit
+
+class Entity
+class Pacman
+class Ghost
+class Blinky
+class Pinky
+class Inky
+class Clyde
+class GhostState
+class MovementComponent
+class InputComponent
+class AIComponent
+
+class CollisionSystem
+class Pathfinding
+class ScoreManager
+class LifeManager
+
+class Renderer
+class UIManager
+class AudioManager
+
+Game --> GameLoop
+Game --> GameConfig
+Game --> GameState
+Game --> Level
+Game --> Renderer
+Game --> UIManager
+Game --> AudioManager
+Game --> ScoreManager
+Game --> LifeManager
+Game --> SaveLoadManager
+Game --> Timer
+
+Level --> Maze
+Level "1" o-- "many" Pellet
+Level "1" o-- "few" PowerPellet
+Level "0..1" o-- Fruit
+Level --> Pacman
+Level --> Blinky
+Level --> Pinky
+Level --> Inky
+Level --> Clyde
+Level --> CollisionSystem
+Level --> Pathfinding
+
+Maze "1" o-- "many" Cell
+
+Entity <|-- Pacman
+Entity <|-- Ghost
+Ghost <|-- Blinky
+Ghost <|-- Pinky
+Ghost <|-- Inky
+Ghost <|-- Clyde
+
+Pacman --> MovementComponent
+Pacman --> InputComponent
+
+Ghost --> MovementComponent
+Ghost --> AIComponent
+Ghost --> GhostState
+
+CollisionSystem --> Maze
+CollisionSystem --> Pacman
+CollisionSystem --> Ghost
+CollisionSystem --> Pellet
+CollisionSystem --> PowerPellet
+CollisionSystem --> Fruit
+CollisionSystem --> ScoreManager
+CollisionSystem --> LifeManager
+CollisionSystem --> AudioManager
+CollisionSystem --> GameState
+CollisionSystem --> Timer
+
+AIComponent --> Pathfinding
+AIComponent --> GameState
+
+Renderer --> Maze
+Renderer --> Entity
+Renderer --> UIManager
+
+UIManager --> GameState
+AudioManager --> GameConfig
+
+@enduml

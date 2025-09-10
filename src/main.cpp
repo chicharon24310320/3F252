@@ -1,14 +1,14 @@
-#include<Foco.hpp>
-#include<iostream>
+#include <iostream>
+#include <Foco.hpp>
 using namespace std;
+
 int main(int argc, char const *argv[])
 {
-    cout<<"HOLA MUNDO"<<endl;
     Foco foco;
     foco.encender();
     cout<<"EstadoFoco: "
     <<foco.LeerEstado()<<endl;
     return 0;
-    foco.apagar();
+  
     return 0;
 }
