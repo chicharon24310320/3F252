@@ -3,18 +3,16 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
-
 #include "Dibujo.hpp"
 #include "GestorDibujos.hpp"
-#include "Letrero.hpp"  // Letrero "BUEN VIAJE"
-
+#include "Letrero.hpp"  
 using namespace ftxui;
 
 int main() {
-    // Crear pantalla de 80x24
+
     auto screen = Screen::Create(Dimension::Fixed(80), Dimension::Fixed(24));
 
-    // ===== FIGURAS =====
+
     const std::vector<std::u32string> cohete = {
         U"     ^     ",
         U"    /^\\    ",
@@ -47,7 +45,7 @@ int main() {
         U"        *         *      *        ",
     };
 
-    // Persona celebrando
+  
     const std::vector<std::u32string> persona1 = {
         U"  \\\\O//  ",
         U"    |    ",
@@ -67,13 +65,12 @@ int main() {
     gestor.Agregar(Dibujo(35, 20, fuego1, ftxui::Color::Red));         // 2: fuego
     gestor.Agregar(Dibujo(5, 18, persona1, ftxui::Color::GreenLight)); // 3: persona
 
-    // ===== LETRERO "BUEN VIAJE" =====
+
     Letrero letrero(3, 2, ftxui::Color::White);
 
-    // ===== ANIMACIÓN =====
+
     int frames = 120;
 
-    // Limpiar terminal al iniciar
     std::cout << "\033[2J\033[1;1H";
 
     for (int frame = 0; frame < frames; ++frame) {
@@ -84,7 +81,7 @@ int main() {
         gestor.dibujos[1].y = 10 - desplazamiento; // cohete
         gestor.dibujos[2].y = 20 - desplazamiento; // fuego (sigue al cohete)
 
-        // Alternar fuego
+    
         if (frame % 4 < 2)
             gestor.dibujos[2].figura = fuego1;
         else
@@ -100,16 +97,16 @@ int main() {
         if (frame % 6 == 0)
             letrero.ActualizarColor();
 
-        // ===== Dibujar todos los elementos =====
+ 
         gestor.DibujarTodos(screen);
         letrero.Dibujar(screen);
 
-        // ===== Mostrar solo UN frame (sin scroll infinito) =====
+      
         std::cout << screen.ToString()
                   << screen.ResetPosition()
                   << std::flush;
 
-        // Controlar velocidad
+  
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
